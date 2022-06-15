@@ -4,6 +4,7 @@ let user1 = new User(),
     user2 = new User();
 
 user1.name = 'Alex';
+user1.surname = 'Camboyano';
 user1.age = 20;
 user1.email = 'alex@example.com';
 user1.additionalData = {
@@ -12,6 +13,7 @@ user1.additionalData = {
 };
 
 user2.name = 'Andrew';
+user2.surname = 'Pepe';
 user2.age = 21;
 user2.email = 'andrew@example.com';
 user2.additionalData = {
@@ -54,3 +56,47 @@ test('user1 and user2 additional datas have the same properties', () => {
 test('user1 and user2 additional datas are not the exact same', () => {
     expect(user1.additionalData).not.toBe(user2.additionalData);
 });
+
+describe('getFullName', () => {
+    test('should return name and surname', () => {
+        const result = user1.getFullName()
+        expect(result).toBe('Alex Camboyano')
+    })
+})
+
+describe('getEmailAlias', () => {
+    test('should return alias of the email', () => {
+        const result = user1.getEmailAlias()
+        expect(result).toBe('alex');
+    })
+    test('should validate that alias exists', () => {
+        const user3 = new User()
+        user3.email = '@gmail.com'
+        const result = user3.getEmailAlias();
+        expect(result).toBeNull()
+    })
+    test('should validate char "@" does not exists', () => {
+        const user3 = new User()
+        user3.email = 'pepe'
+        const result = user3.getEmailAlias();
+        expect(result).toBeNull()
+    })
+    test('should validate char "@" does exists only once', () => {
+        const user3 = new User()
+        user3.email = '@pepe@'
+        const result = user3.getEmailAlias();
+        expect(result).toBeNull()
+    })
+    test('should validate char "@" does exists only once', () => {
+        const user3 = new User()
+        user3.email = '@pepe@@'
+        const result = user3.getEmailAlias();
+        expect(result).toBeNull()
+    })
+    test.only('should validate char "@" does exists only once', () => {
+        const user3 = new User()
+        user3.email = '@@pepe@'
+        const result = user3.getEmailAlias();
+        expect(result).toBeNull()
+    })
+})
