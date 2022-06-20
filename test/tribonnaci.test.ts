@@ -1,7 +1,7 @@
-import { assert } from "chai";
-import { tribonacci, suma } from "./solution";
+import { tribonacci, suma } from "../src/tribonnaci";
 
-const tester = (sig: [number, number, number], n: number, exp: number[]) => it(`tribonacci([${sig[0]}, ${sig[1]}, ${sig[2]}], ${n})`, () => assert.deepStrictEqual(tribonacci(sig, n), exp));
+const tester = (sig: [number, number, number], n: number, exp: number[]) => it(`tribonacci([${sig[0]}, ${sig[1]}, ${sig[2]}], ${n})`, () =>  expect(tribonacci(sig, n)).toStrictEqual(exp));
+
 describe("basic tests", () => {
   tester([1, 1, 1], 10, [1, 1, 1, 3, 5, 9, 17, 31, 57, 105]);
   tester([0, 0, 1], 10, [0, 0, 1, 1, 2, 4, 7, 13, 24, 44]);
@@ -17,7 +17,7 @@ describe("basic tests", () => {
   tester([4, 17, 28], 2, [4, 17]);
 });
 
-const testSuma = (numeros: number[], exp: number) => it('', () => assert.equal(suma(numeros), exp));
+const testSuma = (numeros: number[], exp: number) => it('', () => expect(suma(numeros)).toBe(exp));
 describe('test de suma', () =>{
   testSuma([100, 10, 1], 111);
   testSuma([], 0);
